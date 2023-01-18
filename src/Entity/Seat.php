@@ -22,8 +22,9 @@ class Seat
     #[ORM\Column(length: 255)]
     private ?string $State = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Seat')]
-    private ?Room $room = null;
+    #[ORM\Column]
+    private ?int $Number_of_room = null;
+
 
     public function getId(): ?int
     {
@@ -66,15 +67,17 @@ class Seat
         return $this;
     }
 
-    public function getRoom(): ?Room
+    public function getNumberOfRoom(): ?int
     {
-        return $this->room;
+        return $this->Number_of_room;
     }
 
-    public function setRoom(?Room $room): self
+    public function setNumberOfRoom(int $Number_of_room): self
     {
-        $this->room = $room;
+        $this->Number_of_room = $Number_of_room;
 
         return $this;
     }
+
+
 }
