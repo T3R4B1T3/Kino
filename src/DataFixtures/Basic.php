@@ -14,15 +14,17 @@ class Basic extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
+        $seatNumber = 1;
 
         for( $i = 1; $i <= 3; $i++){
             for($j = 1; $j <=10; $j++){
                 $seat = new Seat();
-                $seat->setNumberOfSeat($j);
+                $seat->setNumberOfSeat($seatNumber);
                 $seat->setNumberOfRow($i);
                 $seat->setState('avaliable');
                 $seat->setNumberOfRoom(1);
                 $manager->persist($seat);
+                $seatNumber++;
             }
         }
         $manager->flush();
