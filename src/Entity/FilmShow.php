@@ -22,6 +22,9 @@ class FilmShow
     #[ORM\OneToMany(mappedBy: 'film_show_id', targetEntity: FilmShowTakenSeat::class, orphanRemoval: true)]
     private Collection $filmShowTakenSeats;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
     public function __construct()
     {
         $this->filmShowTakenSeats = new ArrayCollection();
@@ -70,6 +73,18 @@ class FilmShow
                 $filmShowTakenSeat->setFilmShowId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+    <label for="selectFilmShow">Select film show</label>
+    <select id="selectFilmShow">
+        {% for filmShow in filmShows %}
+            <option>{{ filmShow.title }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}

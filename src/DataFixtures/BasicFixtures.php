@@ -22,6 +22,36 @@ class BasicFixtures extends Fixture
 
         $filmShow = new FilmShow();
         $filmShow->setRoomId($room->getId());
+        $filmShow->setTitle("Predator");
+        $manager->persist($filmShow);
+
+        $filmShowTakenSeat = new FilmShowTakenSeat();
+        $filmShowTakenSeat->setFilmShowId($filmShow->getId());
+        $filmShowTakenSeat->setSeat(2);
+        $filmShowTakenSeat->setLine(1);
+        $filmShowTakenSeat->setReservationNumber(1);
+        $manager->persist($filmShowTakenSeat);
+
+        $filmShowTakenSeat = new FilmShowTakenSeat();
+        $filmShowTakenSeat->setFilmShowId($filmShow->getId());
+        $filmShowTakenSeat->setSeat(3);
+        $filmShowTakenSeat->setLine(7);
+        $filmShowTakenSeat->setReservationNumber(1);
+        $manager->persist($filmShowTakenSeat);
+
+        $filmShow = new FilmShow();
+        $filmShow->setRoomId($room->getId());
+        $filmShow->setTitle("Titanic");
+        $manager->persist($filmShow);
+
+        $room = new Room();
+        $room->setRowCount(5);
+        $room->setRowSeatCount(15);
+        $manager->persist($room);
+
+        $filmShow = new FilmShow();
+        $filmShow->setRoomId($room->getId());
+        $filmShow->setTitle("Indiana Jones");
         $manager->persist($filmShow);
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
