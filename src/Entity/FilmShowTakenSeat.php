@@ -22,6 +22,10 @@ class FilmShowTakenSeat
     #[ORM\Column]
     private ?int $reservation_number = null;
 
+    #[ORM\ManyToOne(inversedBy: 'filmShowTakenSeats')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FilmShow $film_show = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class FilmShowTakenSeat
     public function setReservationNumber(int $reservation_number): self
     {
         $this->reservation_number = $reservation_number;
+
+        return $this;
+    }
+
+    public function getFilmShowId(): ?FilmShow
+    {
+        return $this->film_show_id;
+    }
+
+    public function setFilmShowId(?FilmShow $film_show_id): self
+    {
+        $this->film_show_id = $film_show_id;
 
         return $this;
     }

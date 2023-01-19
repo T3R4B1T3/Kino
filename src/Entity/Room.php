@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
@@ -18,6 +20,14 @@ class Room
 
     #[ORM\Column]
     private ?int $row_seat_count = null;
+
+    #[ORM\OneToMany(mappedBy: 'room_id', targetEntity: FilmShow::class, orphanRemoval: true)]
+    private Collection $filmShows;
+
+    public function __construct()
+    {
+        $this->filmShows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +54,36 @@ class Room
     public function setRowSeatCount(int $row_seat_count): self
     {
         $this->row_seat_count = $row_seat_count;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FilmShow>
+     */
+    public function getFilmShows(): Collection
+    {
+        return $this->filmShows;
+    }
+
+    public function addFilmShow(FilmShow $filmShow): self
+    {
+        if (!$this->filmShows->contains($filmShow)) {
+            $this->filmShows->add($filmShow);
+            $filmShow->setRoomId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilmShow(FilmShow $filmShow): self
+    {
+        if ($this->filmShows->removeElement($filmShow)) {
+            // set the owning side to null (unless already changed)
+            if ($filmShow->getRoomId() === $this) {
+                $filmShow->setRoomId(null);
+            }
+        }
 
         return $this;
     }
