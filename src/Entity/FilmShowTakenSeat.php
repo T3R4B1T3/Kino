@@ -67,14 +67,14 @@ class FilmShowTakenSeat
         return $this;
     }
 
-    public function getFilmShowId(): ?FilmShow
+    public function getFilmShow(): ?FilmShow
     {
-        return $this->film_show_id;
+        return $this->film_show;
     }
 
-    public function setFilmShowId(?FilmShow $film_show_id): self
+    public function setFilmShow(?FilmShow $film_show): self
     {
-        $this->film_show_id = $film_show_id;
+        $this->film_show = $film_show;
 
         return $this;
     }

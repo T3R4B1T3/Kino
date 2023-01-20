@@ -30,19 +30,23 @@ class FilmShow
         $this->filmShowTakenSeats = new ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRoomId(): ?Room
+    public function getRoom(): ?Room
     {
-        return $this->room_id;
+        return $this->room;
     }
 
-    public function setRoomId(?Room $room_id): self
+    public function setRoom(?Room $room): self
     {
-        $this->room_id = $room_id;
+        $this->room = $room;
 
         return $this;
     }
@@ -59,7 +63,7 @@ class FilmShow
     {
         if (!$this->filmShowTakenSeats->contains($filmShowTakenSeat)) {
             $this->filmShowTakenSeats->add($filmShowTakenSeat);
-            $filmShowTakenSeat->setFilmShowId($this);
+            $filmShowTakenSeat->setFilmShow($this);
         }
 
         return $this;
@@ -69,8 +73,8 @@ class FilmShow
     {
         if ($this->filmShowTakenSeats->removeElement($filmShowTakenSeat)) {
             // set the owning side to null (unless already changed)
-            if ($filmShowTakenSeat->getFilmShowId() === $this) {
-                $filmShowTakenSeat->setFilmShowId(null);
+            if ($filmShowTakenSeat->getFilmShow() === $this) {
+                $filmShowTakenSeat->setFilmShow(null);
             }
         }
 

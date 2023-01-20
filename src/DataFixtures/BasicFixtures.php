@@ -21,26 +21,26 @@ class BasicFixtures extends Fixture
         $manager->persist($room);
 
         $filmShow = new FilmShow();
-        $filmShow->setRoomId($room->getId());
+        $filmShow->setRoom($room);
         $filmShow->setTitle("Predator");
         $manager->persist($filmShow);
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
-        $filmShowTakenSeat->setFilmShowId($filmShow->getId());
+        $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(2);
         $filmShowTakenSeat->setLine(1);
         $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
-        $filmShowTakenSeat->setFilmShowId($filmShow->getId());
+        $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(3);
         $filmShowTakenSeat->setLine(7);
         $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
         $filmShow = new FilmShow();
-        $filmShow->setRoomId($room->getId());
+        $filmShow->setRoom($room);
         $filmShow->setTitle("Titanic");
         $manager->persist($filmShow);
 
@@ -50,12 +50,12 @@ class BasicFixtures extends Fixture
         $manager->persist($room);
 
         $filmShow = new FilmShow();
-        $filmShow->setRoomId($room->getId());
+        $filmShow->setRoom($room);
         $filmShow->setTitle("Indiana Jones");
         $manager->persist($filmShow);
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
-        $filmShowTakenSeat->setFilmShowId($filmShow->getId());
+        $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(6);
         $filmShowTakenSeat->setLine(3);
         $filmShowTakenSeat->setReservationNumber(1);

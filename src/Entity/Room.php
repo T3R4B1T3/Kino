@@ -70,7 +70,7 @@ class Room
     {
         if (!$this->filmShows->contains($filmShow)) {
             $this->filmShows->add($filmShow);
-            $filmShow->setRoomId($this);
+            $filmShow->setRoom($this);
         }
 
         return $this;
@@ -80,8 +80,8 @@ class Room
     {
         if ($this->filmShows->removeElement($filmShow)) {
             // set the owning side to null (unless already changed)
-            if ($filmShow->getRoomId() === $this) {
-                $filmShow->setRoomId(null);
+            if ($filmShow->getRoom() === $this) {
+                $filmShow->setRoom(null);
             }
         }
 
