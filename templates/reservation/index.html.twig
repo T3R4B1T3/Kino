@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+    {% for filmShowTakenSeat in filmShowTakenSeats %}
+        <p>Line: {{ filmShowTakenSeat.line }}</p>
+        <p>Seat: {{ filmShowTakenSeat.seat }}</p>
+        <br>
+    {% endfor %}
+    {{ room.row_count }}
+    {{ room.row_seat_count }}
+{% endblock %}

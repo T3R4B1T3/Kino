@@ -39,20 +39,18 @@ class FilmShowTakenSeatRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return FilmShowTakenSeat[] Returns an array of FilmShowTakenSeat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return FilmShowTakenSeat[] Returns an array of FilmShowTakenSeat objects
+     */
+    public function findByFilmShowId($filmShowId): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.film_show = :film')
+            ->setParameter('film', $filmShowId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?FilmShowTakenSeat
 //    {
