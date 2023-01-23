@@ -3,11 +3,21 @@
 {% block title %}Hello ReservationController!{% endblock %}
 
 {% block body %}
-    {% for filmShowTakenSeat in filmShowTakenSeats %}
-        <p>Line: {{ filmShowTakenSeat.line }}</p>
-        <p>Seat: {{ filmShowTakenSeat.seat }}</p>
-        <br>
-    {% endfor %}
-    {{ room.row_count }}
-    {{ room.row_seat_count }}
+    <div class="container" id="reserv">
+    <table>
+        <tr>
+            {% for letter in 'a'..'j' %}
+              <td> {{ letter }}</td>
+            {% endfor %}
+        </tr>
+        {% for i in 1..room.row_count %}
+            <tr>
+                {% for i in 1..room.row_seat_count  %}
+                    <td><input type="checkbox"></td>
+                {% endfor %}
+                <td>{{ i }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
 {% endblock %}

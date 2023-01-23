@@ -1,0 +1,61 @@
+html{
+    background-color: cornflowerblue;
+    font-family: 'Arial', sans-serif;
+}
+.container{
+    max-width: 450px;
+    position: relative;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10% auto 0;
+    background-color: #F8F8F8;
+}
+
+#btn{
+    width: 100%;
+    background-color: #009879;
+    color: #F8F8F8;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+#btn:hover {
+    background-color: seagreen;
+}
+select{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.container#reserv{
+    width: 400px;
+    text-align: center;
+}
+.container#reserv table{
+ text-align: center;
+    font-size: 20px;
+}
+
+input[type="checkbox"]{
+    display: table;
+    place-content: center;
+    width: 25px;
+    height: 25px;
+    padding: 20px;
+}
+input[type="checkbox"]:hover{
+    cursor: pointer;
+    background: #009879;
+}
