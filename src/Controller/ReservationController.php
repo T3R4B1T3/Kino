@@ -18,9 +18,11 @@ class ReservationController extends AbstractController
         Request                     $request
     ): Response
     {
-        $filmShowTakenSeats = $filmShowTakenSeatRepository->findByFilmShowId(
-            $request->query->get('filmShowId')
-        );
+        $filmShowTakenSeats = $filmShowTakenSeatRepository->findBy([
+            'film_show' => $request->query->get('filmShowId')
+        ]);
+
+        $seats = [];
 
         $roomEntity = $roomRepository->findBy([
             'id' => $request->query->get('roomId')
@@ -31,8 +33,22 @@ class ReservationController extends AbstractController
             'row_seat_count' => $roomEntity->getRowSeatCount()
         ];
 
+        for ($i = 0; $i < $roomEntity->getRowCount(); $i++) {
+            for ($j = 0; $j < $roomEntity->getRowSeatCount(); $j++) {
+                for ($k = 0; $k < count($filmShowTakenSeats); $k++) {
+                    if ($filmShowTakenSeats[$k]->getLine() == $i
+                        && $filmShowTakenSeats[$k]->getSeat() == $j) {
+                        $seats[$i][$j] = 1;
+                        $k = count($filmShowTakenSeats) + 1;
+                    } else {
+                        $seats[$i][$j] = 0;
+                    }
+                }
+            }
+        }
+
         return $this->render('reservation/index.html.twig', [
-            'filmShowTakenSeats' => $filmShowTakenSeats,
+            'seats' => $seats,
             'room' => $room
         ]);
     }
