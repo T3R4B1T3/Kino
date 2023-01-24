@@ -12,9 +12,6 @@ class BasicFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
         $room = new Room();
         $room->setRowCount(3);
         $room->setRowSeatCount(10);
@@ -34,8 +31,8 @@ class BasicFixtures extends Fixture
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
         $filmShowTakenSeat->setFilmShow($filmShow);
-        $filmShowTakenSeat->setSeat(3);
-        $filmShowTakenSeat->setLine(7);
+        $filmShowTakenSeat->setSeat(7);
+        $filmShowTakenSeat->setLine(2);
         $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
@@ -57,7 +54,7 @@ class BasicFixtures extends Fixture
         $filmShowTakenSeat = new FilmShowTakenSeat();
         $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(6);
-        $filmShowTakenSeat->setLine(3);
+        $filmShowTakenSeat->setLine(2);
         $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
