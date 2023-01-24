@@ -11,21 +11,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
 {
-    #[Route('/reservation', name: 'app_reservation')]
+    #[Route('/reservation', name: 'app_reservation', methods: ['GET', 'POST'])]
     public function reservation(
         FilmShowTakenSeatRepository $filmShowTakenSeatRepository,
         RoomRepository              $roomRepository,
         Request                     $request
     ): Response
     {
+        $seats = [];
+        if($request->query->get('filmShowId') == null
+            || $request->query->get('roomId') == null) {
+            $filmShowId = $request->get('filmShowId');
+            $roomId = $request->get('roomId');
+        } else {
+            $filmShowId = $request->query->get('filmShowId');
+            $roomId = $request->query->get('roomId');
+        }
+
         $filmShowTakenSeats = $filmShowTakenSeatRepository->findBy([
-            'film_show' => $request->query->get('filmShowId')
+            'film_show' => $filmShowId
         ]);
 
-        $seats = [];
-
         $roomEntity = $roomRepository->findBy([
-            'id' => $request->query->get('roomId')
+            'id' => $roomId
         ])[0];
 
         $room = (object)[
@@ -47,9 +55,15 @@ class ReservationController extends AbstractController
             }
         }
 
+        $data = $request->get('seats');
+        var_dump($data);
+
+
         return $this->render('reservation/index.html.twig', [
             'seats' => $seats,
-            'room' => $room
+            'room' => $room,
+            'filmShowId' => $filmShowId,
+            'roomId' => $roomId
         ]);
     }
 }

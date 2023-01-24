@@ -4,20 +4,30 @@
 
 {% block body %}
     <div class="container" id="reserv">
-    <table>
-        <tr>
-            {% for letter in 'a'..'j' %}
-              <td> {{ letter }}</td>
-            {% endfor %}
-        </tr>
-        {% for i in 1..room.row_count %}
-            <tr>
-                {% for i in 1..room.row_seat_count  %}
-                    <td><input type="checkbox"></td>
-                {% endfor %}
-                <td>{{ i }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+        <h1>Select seat</h1>
+        <form method="post" action="{{ path('app_reservation') }}">
+            <table>
+                <tr>
+                    {% for i in 0..room.row_seat_count - 1 %}
+                        <td> {{ range('a','z')[i] }}</td>
+                    {% endfor %}
+                </tr>
+                    {% for i in 0..seats|length - 1 %}
+                        <tr>
+                            {% for j in 0..seats[i]|length - 1 %}
+                                {% if seats[i][j] == 0 %}
+                                    <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}"></td>
+                                {% else %}
+                                    <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}" disabled></td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>{{ i }}</td>
+                        </tr>
+                    {% endfor %}
+            </table>
+            <input type="hidden" name="filmShowId" value="{{ filmShowId }}">
+            <input type="hidden" name="roomId" value="{{ roomId }}">
+            <button type="submit" id="btn">Confirm</button>
+        </form>
     </div>
 {% endblock %}

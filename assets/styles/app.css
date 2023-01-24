@@ -59,3 +59,7 @@ input[type="checkbox"]:hover{
     cursor: pointer;
     background: #009879;
 }
+input[type=checkbox][disabled]{
+    outline: 3px solid red;
+    cursor: not-allowed;
+}
