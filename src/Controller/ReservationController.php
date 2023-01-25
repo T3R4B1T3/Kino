@@ -19,7 +19,7 @@ class ReservationController extends AbstractController
     ): Response
     {
         $seats = [];
-        if($request->query->get('filmShowId') == null
+        if ($request->query->get('filmShowId') == null
             || $request->query->get('roomId') == null) {
             $filmShowId = $request->get('filmShowId');
             $roomId = $request->get('roomId');
@@ -43,21 +43,24 @@ class ReservationController extends AbstractController
 
         for ($i = 0; $i < $roomEntity->getRowCount(); $i++) {
             for ($j = 0; $j < $roomEntity->getRowSeatCount(); $j++) {
-                for ($k = 0; $k < count($filmShowTakenSeats); $k++) {
-                    if ($filmShowTakenSeats[$k]->getLine() == $i
-                        && $filmShowTakenSeats[$k]->getSeat() == $j) {
-                        $seats[$i][$j] = 1;
-                        $k = count($filmShowTakenSeats) + 1;
-                    } else {
-                        $seats[$i][$j] = 0;
+
+                if ($filmShowTakenSeats !== []) {
+                    for ($k = 0; $k < count($filmShowTakenSeats); $k++) {
+                        if ($filmShowTakenSeats[$k]->getLine() == $i
+                            && $filmShowTakenSeats[$k]->getSeat() == $j) {
+                            $seats[$i][$j] = 1;
+                            $k = count($filmShowTakenSeats) + 1;
+                        } else {
+                            $seats[$i][$j] = 0;
+                        }
                     }
+                } else {
+                    $seats[$i][$j] = 0;
                 }
             }
         }
 
         $data = $request->get('seats');
-        var_dump($data);
-
 
         return $this->render('reservation/index.html.twig', [
             'seats' => $seats,
