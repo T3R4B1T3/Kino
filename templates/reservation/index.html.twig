@@ -27,8 +27,8 @@
             </table>
             <input type="hidden" name="filmShowId" value="{{ filmShowId }}">
             <input type="hidden" name="roomId" value="{{ roomId }}">
-            <button type="submit" id="btn">Confirm</button>
+            <a href="{{ path('app_payment') }}"><input type="button" value="Payment" id="btn"></a>
         </form>
-        <a href="{{ path('app_payment') }}"><input type="submit" value="Payment" id="btn"></a>
+
     </div>
 {% endblock %}
