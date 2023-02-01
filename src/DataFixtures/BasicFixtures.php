@@ -26,14 +26,12 @@ class BasicFixtures extends Fixture
         $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(2);
         $filmShowTakenSeat->setLine(1);
-        $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
         $filmShowTakenSeat = new FilmShowTakenSeat();
         $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(7);
         $filmShowTakenSeat->setLine(2);
-        $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
         $filmShow = new FilmShow();
@@ -55,7 +53,6 @@ class BasicFixtures extends Fixture
         $filmShowTakenSeat->setFilmShow($filmShow);
         $filmShowTakenSeat->setSeat(6);
         $filmShowTakenSeat->setLine(2);
-        $filmShowTakenSeat->setReservationNumber(1);
         $manager->persist($filmShowTakenSeat);
 
         $manager->flush();

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FilmShowTakenSeatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: FilmShowTakenSeatRepository::class)]
 class FilmShowTakenSeat
@@ -19,12 +21,17 @@ class FilmShowTakenSeat
     #[ORM\Column]
     private ?int $seat = null;
 
-    #[ORM\Column]
-    private ?int $reservation_number = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $reservation_number;
 
     #[ORM\ManyToOne(inversedBy: 'filmShowTakenSeats')]
     #[ORM\JoinColumn(nullable: true)]
     private ?FilmShow $film_show = null;
+
+    public function __construct()
+    {
+        $this->reservation_number = Uuid::v7();
+    }
 
     public function getId(): ?int
     {
@@ -55,16 +62,9 @@ class FilmShowTakenSeat
         return $this;
     }
 
-    public function getReservationNumber(): ?int
+    public function getReservationNumber(): ?Uuid
     {
         return $this->reservation_number;
-    }
-
-    public function setReservationNumber(int $reservation_number): self
-    {
-        $this->reservation_number = $reservation_number;
-
-        return $this;
     }
 
     public function getFilmShow(): ?FilmShow

@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
-
 {% block body %}
 <div class="container">
     {{ form_start(form) }}
         {{ form_row(form.title) }}
-        <button type="submit" id="btn">Confirm</button>
+        <button type="submit" id="btn">Submit</button>
     {{ form_end(form) }}
 </div>
     {% endblock %}
