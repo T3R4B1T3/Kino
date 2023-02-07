@@ -16,6 +16,8 @@ class PaymentController extends AbstractController
 
     public function payment(FilmShowRepository $filmShowRepository, Request $request): Response
     {
+        var_dump($request->get('seats'));
+
         return $this->render('payment/index.html.twig');
     }
 
@@ -24,7 +26,8 @@ class PaymentController extends AbstractController
         FilmShowRepository $filmShowRepository,
         ManagerRegistry $doctrine,
         Request $request){
-        var_dump($request->get('filmShowId'));
+        var_dump(json_decode($request->get('filmShowId')));
+        var_dump(json_decode($request->get('takenSeats')));
 
         $entityManager = $doctrine->getManager();
         $film = new FilmShowTakenSeat();
@@ -41,7 +44,7 @@ class PaymentController extends AbstractController
 
     #[Route('/payment/failed', name: 'app_payment_failed')]
     public function paymentFailed(){
-            var_dump("NIE POSZLO");
+        var_dump("NIE POSZLO");
         return $this->render('payment/index.html.twig');
     }
 }

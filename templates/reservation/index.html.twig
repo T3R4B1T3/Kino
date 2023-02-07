@@ -3,29 +3,30 @@
 {% block body %}
     <div class="container" id="reserv">
         <h1>Select seat</h1>
-        <form method="post" action="{{ path('app_reservation') }}">
+        <form method="post" action="{{ path('app_payment') }}">
             <table>
                 <tr>
                     {% for i in 0..room.row_seat_count - 1 %}
                         <td> {{ range('a','z')[i] }}</td>
                     {% endfor %}
                 </tr>
-                    {% for i in 0..seats|length - 1 %}
-                        <tr>
-                            {% for j in 0..seats[i]|length - 1 %}
-                                {% if seats[i][j] == 0 %}
-                                    <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}"></td>
-                                {% else %}
-                                    <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}" disabled></td>
-                                {% endif %}
-                            {% endfor %}
-                            <td>{{ i }}</td>
-                        </tr>
-                    {% endfor %}
+                {% for i in 0..seats|length - 1 %}
+                    <tr>
+                        {% for j in 0..seats[i]|length - 1 %}
+                            {% if seats[i][j] == 0 %}
+                                <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}"></td>
+                            {% else %}
+                                <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}" disabled></td>
+                            {% endif %}
+                        {% endfor %}
+                        <td>{{ i }}</td>
+                    </tr>
+                {% endfor %}
             </table>
             <input type="hidden" name="filmShowId" value="{{ filmShowId }}">
             <input type="hidden" name="roomId" value="{{ roomId }}">
-            <a href="{{ path('app_payment') }}"><input type="button" value="Payment" id="btn"></a>
+
+            <input type="submit" value="Payment" id="btn">
         </form>
 
     </div>
