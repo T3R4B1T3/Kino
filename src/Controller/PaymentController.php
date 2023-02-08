@@ -8,15 +8,21 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AbstractController
 {
     #[Route('/payment', name: 'app_payment')]
-
-    public function payment(FilmShowRepository $filmShowRepository, Request $request): Response
-    {
-        var_dump($request->get('seats'));
+    public function payment(
+        FilmShowRepository $filmShowRepository,
+        Request $request,
+        Session $session
+    ): Response {
+        $seats = $request->get('seats');
+        $filmShowId = $request->get('filmShowId');
+        $session->set('seats', json_encode($seats));
+        $session->set('filmShowId', $filmShowId);
 
         return $this->render('payment/index.html.twig');
     }
@@ -25,14 +31,16 @@ class PaymentController extends AbstractController
     public function paymentSuccess(
         FilmShowRepository $filmShowRepository,
         ManagerRegistry $doctrine,
-        Request $request){
-        var_dump(json_decode($request->get('filmShowId')));
-        var_dump(json_decode($request->get('takenSeats')));
+        Request $request,
+        Session $session
+    ) {
+        $seats = $session->get('seats');
+        $filmShowId = $request->get('filmShowId');
 
         $entityManager = $doctrine->getManager();
         $film = new FilmShowTakenSeat();
         $film->setFilmShow($filmShowRepository->findBy([
-            'id' => $request->get('filmShowId')
+            'id' => $filmShowId
         ])[0]);
         $film->setLine(2);
         $film->setSeat(7);
@@ -43,7 +51,8 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/payment/failed', name: 'app_payment_failed')]
-    public function paymentFailed(){
+    public function paymentFailed()
+    {
         var_dump("NIE POSZLO");
         return $this->render('payment/index.html.twig');
     }

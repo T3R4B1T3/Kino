@@ -60,8 +60,6 @@ class ReservationController extends AbstractController
             }
         }
 
-        $data = $request->get('seats');
-
         return $this->render('reservation/index.html.twig', [
             'seats' => $seats,
             'room' => $room,
