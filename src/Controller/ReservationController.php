@@ -14,27 +14,20 @@ class ReservationController extends AbstractController
     #[Route('/reservation', name: 'app_reservation', methods: ['GET', 'POST'])]
     public function reservation(
         FilmShowTakenSeatRepository $filmShowTakenSeatRepository,
-        RoomRepository              $roomRepository,
-        Request                     $request
-    ): Response
-    {
+        RoomRepository $roomRepository,
+        Request $request
+    ): Response {
         $seats = [];
-        if ($request->query->get('filmShowId') == null
-            || $request->query->get('roomId') == null) {
-            $filmShowId = $request->get('filmShowId');
-            $roomId = $request->get('roomId');
-        } else {
-            $filmShowId = $request->query->get('filmShowId');
-            $roomId = $request->query->get('roomId');
-        }
+        $filmShowId = $request->query->get('filmShowId');
+        $roomId = $request->query->get('roomId');
 
         $filmShowTakenSeats = $filmShowTakenSeatRepository->findBy([
             'film_show' => $filmShowId
         ]);
 
-        $roomEntity = $roomRepository->findBy([
+        $roomEntity = $roomRepository->findOneBy([
             'id' => $roomId
-        ])[0];
+        ]);
 
         $room = (object)[
             'row_count' => $roomEntity->getRowCount(),

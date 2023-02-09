@@ -39,21 +39,20 @@ class PaymentController extends AbstractController
 
         $entityManager = $doctrine->getManager();
         $film = new FilmShowTakenSeat();
-        $film->setFilmShow($filmShowRepository->findBy([
+        $film->setFilmShow($filmShowRepository->findOneBy([
             'id' => $filmShowId
-        ])[0]);
+        ]));
         $film->setLine(2);
         $film->setSeat(7);
         $entityManager->persist($film);
         $entityManager->flush();
 
-        return $this->render('payment/index.html.twig');
+        return $this->render('payment/success.html.twig');
     }
 
     #[Route('/payment/failed', name: 'app_payment_failed')]
     public function paymentFailed()
     {
-        var_dump("NIE POSZLO");
-        return $this->render('payment/index.html.twig');
+        return $this->render('payment/failure.html.twig');
     }
 }
