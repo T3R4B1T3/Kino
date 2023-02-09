@@ -14,9 +14,9 @@
                     <tr>
                         {% for j in 0..seats[i]|length - 1 %}
                             {% if seats[i][j] == 0 %}
-                                <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}"></td>
+                                <td><input type="checkbox" name="seats[]" id="{{ i + 1 }}-{{ j + 1 }}" value="{{ i + 1 }}-{{ j + 1 }}"></td>
                             {% else %}
-                                <td><input type="checkbox" name="seats[]" id="{{ i }}-{{ j }}" value="{{ i }}-{{ j }}" disabled></td>
+                                <td><input type="checkbox" name="seats[]" id="{{ i + 1 }}-{{ j + 1 }}" value="{{ i + 1 }}-{{ j + 1 }}" disabled></td>
                             {% endif %}
                         {% endfor %}
                         <td>{{ i }}</td>

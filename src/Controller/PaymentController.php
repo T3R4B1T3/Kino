@@ -31,20 +31,24 @@ class PaymentController extends AbstractController
     public function paymentSuccess(
         FilmShowRepository $filmShowRepository,
         ManagerRegistry $doctrine,
-        Request $request,
         Session $session
     ) {
-        $seats = $session->get('seats');
-        $filmShowId = $request->get('filmShowId');
+        $seats = json_decode($session->get('seats'));
+        $filmShowId = $session->get('filmShowId');
 
-        $entityManager = $doctrine->getManager();
-        $film = new FilmShowTakenSeat();
-        $film->setFilmShow($filmShowRepository->findOneBy([
-            'id' => $filmShowId
-        ]));
-        $film->setLine(2);
-        $film->setSeat(7);
-        $entityManager->persist($film);
+
+        for($i = 0; $i < count($seats); $i++) {
+            $entityManager = $doctrine->getManager();
+            $film = new FilmShowTakenSeat();
+            $film->setFilmShow($filmShowRepository->findOneBy([
+                'id' => $filmShowId
+            ]));
+            $film->setLine((int)explode('-' ,$seats[$i])[0]);
+            $film->setSeat((int)explode('-' ,$seats[$i])[1]);
+            $entityManager->persist($film);
+        }
+
+
         $entityManager->flush();
 
         return $this->render('payment/success.html.twig');
