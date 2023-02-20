@@ -9,13 +9,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\Store\FlockStore;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AbstractController
 {
+    public array $locks;
+
+    public function __construct() {
+        $this->locks = [];
+    }
+
     #[Route('/payment', name: 'app_payment')]
     public function payment(
-        FilmShowRepository $filmShowRepository,
         Request $request,
         Session $session
     ): Response {
@@ -23,6 +30,13 @@ class PaymentController extends AbstractController
         $filmShowId = $request->get('filmShowId');
         $session->set('seats', json_encode($seats));
         $session->set('filmShowId', $filmShowId);
+
+        $store = new FlockStore();
+        $lockFactory = new LockFactory($store);
+
+        for($i = 0; $i < count($seats); $i++) {
+            $this->locks[$i] = $lockFactory->createLock($filmShowId."-".$seats[$i]);
+        }
 
         return $this->render('payment/index.html.twig');
     }
@@ -37,8 +51,9 @@ class PaymentController extends AbstractController
         $filmShowId = $session->get('filmShowId');
 
 
+        $entityManager = $doctrine->getManager();
+
         for($i = 0; $i < count($seats); $i++) {
-            $entityManager = $doctrine->getManager();
             $film = new FilmShowTakenSeat();
             $film->setFilmShow($filmShowRepository->findOneBy([
                 'id' => $filmShowId
@@ -48,6 +63,9 @@ class PaymentController extends AbstractController
             $entityManager->persist($film);
         }
 
+        foreach($this->locks as $lock) {
+            $lock->relase();
+        }
 
         $entityManager->flush();
 
