@@ -26,19 +26,26 @@ class PaymentController extends AbstractController
         Request $request,
         Session $session
     ): Response {
-        $seats = $request->get('seats');
-        $filmShowId = $request->get('filmShowId');
-        $session->set('seats', json_encode($seats));
-        $session->set('filmShowId', $filmShowId);
+        if(empty($request->get('seats'))) {
+            return $this->redirectToRoute('app_reservation', [
+                'filmShowId' => $request->get('filmShowId'),
+                'roomId' => $request->get('roomId')
+            ]);
+        } else {
+            $seats = $request->get('seats');
+            $filmShowId = $request->get('filmShowId');
+            $session->set('seats', json_encode($seats));
+            $session->set('filmShowId', $filmShowId);
 
-        $store = new FlockStore();
-        $lockFactory = new LockFactory($store);
+            $store = new FlockStore();
+            $lockFactory = new LockFactory($store);
 
-        for($i = 0; $i < count($seats); $i++) {
-            $this->locks[$i] = $lockFactory->createLock($filmShowId."-".$seats[$i]);
+            for($i = 0; $i < count($seats); $i++) {
+                $this->locks[$i] = $lockFactory->createLock($filmShowId."-".$seats[$i]);
+            }
+
+            return $this->render('payment/index.html.twig');
         }
-
-        return $this->render('payment/index.html.twig');
     }
 
     #[Route('/payment/success', name: 'app_payment_success')]
@@ -75,6 +82,10 @@ class PaymentController extends AbstractController
     #[Route('/payment/failed', name: 'app_payment_failed')]
     public function paymentFailed()
     {
+        foreach($this->locks as $lock) {
+            $lock->relase();
+        }
+
         return $this->render('payment/failure.html.twig');
     }
 }

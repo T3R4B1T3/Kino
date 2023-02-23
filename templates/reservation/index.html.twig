@@ -14,16 +14,28 @@
                     <tr>
                         {% for j in 0..seats[i]|length - 1 %}
                             {% if seats[i][j] == 0 %}
-                                <td><input type="checkbox" name="seats[]" id="{{ i + 1 }}-{{ j + 1 }}" value="{{ i + 1 }}-{{ j + 1 }}"></td>
+                                <td>
+                                    <input type="checkbox"
+                                           name="seats[]"
+                                           id="{{ i + 1 }}-{{ j + 1 }}"
+                                           value="{{ i + 1 }}-{{ j + 1 }}">
+                                </td>
                             {% else %}
-                                <td><input type="checkbox" name="seats[]" id="{{ i + 1 }}-{{ j + 1 }}" value="{{ i + 1 }}-{{ j + 1 }}" disabled></td>
+                                <td>
+                                    <input type="checkbox"
+                                           name="seats[]"
+                                           id="{{ i + 1 }}-{{ j + 1 }}"
+                                           value="{{ i + 1 }}-{{ j + 1 }}"
+                                           disabled>
+                                </td>
                             {% endif %}
                         {% endfor %}
                         <td>{{ i }}</td>
                     </tr>
                 {% endfor %}
             </table>
-            <input type="hidden" name="filmShowId" value="{{ filmShowId }}">>
+            <input type="hidden" name="filmShowId" value="{{ filmShowId }}">
+            <input type="hidden" name="roomId" value="{{ roomId }}">
 
             <input type="submit" value="Payment" id="btn">
         </form>

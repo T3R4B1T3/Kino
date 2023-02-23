@@ -18,8 +18,15 @@ class ReservationController extends AbstractController
         Request $request
     ): Response {
         $seats = [];
-        $filmShowId = $request->query->get('filmShowId');
-        $roomId = $request->query->get('roomId');
+
+        if($request->query->get('filmShowId') == null
+            || $request->query->get('roomId') == null) {
+            $filmShowId = $request->get('filmShowId');
+            $roomId = $request->get('roomId');
+        } else {
+            $filmShowId = $request->query->get('filmShowId');
+            $roomId = $request->query->get('roomId');
+        }
 
         $filmShowTakenSeats = $filmShowTakenSeatRepository->findBy([
             'film_show' => $filmShowId
